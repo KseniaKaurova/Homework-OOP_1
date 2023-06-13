@@ -26,19 +26,6 @@ class Student:
 
         return average
 
-    def average_course(self, student_list, course):
-        s = 0
-        l = 0
-        average = 0
-        for student in student_list:
-            for k, v in self.grades.items():
-                if k == course:
-                    average = sum(v) / len(v)
-            s += average
-            l += 1
-        average_course = s / l
-        return average_course
-
     def __str__(self):
         return f'Имя: {self.name}' \
                f'Фамилия: {self.surname}' \
@@ -75,19 +62,6 @@ class Lecturer(Mentor):
 
         return average
 
-    def average_course(self, lecture_list, course):
-        s = 0
-        l = 0
-        average = 0
-        for student in lecture_list:
-            for k, v in self.grades.items():
-                if k == course:
-                    average = sum(v) / len(v)
-            s += average
-            l += 1
-        average_course = s / l
-        return average_course
-
     def __str__(self):
         return f'Имя: {self.name} ' \
                f'Фамилия: {self.surname} ' \
@@ -112,9 +86,38 @@ class Reviewer(Mentor):
                f' Фамилия: {self.surname}'
 
 
+def average_students_course(student_list, course):
+    s = 0
+    l = 0
+    for student in student_list:
+        s += sum(student.grades.get(course, []))
+        l += len(student.grades.get(course, []))
+
+    return s / l
+
+
+def average_lecture_course(lecture_list, course):
+    s = 0
+    l = 0
+    for lecture in lecture_list:
+        s += sum(lecture.grades.get(course, []))
+        l += len(lecture.grades.get(course, []))
+
+    return s / l
+
+
 sasha = Student('Sasha', 'Ivanov', 'm')
+vasy = Student('Vasiliy', 'Petrov', 'm')
+egor = Student('Egor', 'Sidorov', 'm')
 masha = Student('Masha', 'Semenova', 'w')
+katy = Student('Ekaterina', 'Karpova', 'w')
 andreeva = Lecturer('Nina', 'Andreeva')
 nikolaeva = Lecturer('Olga', 'Nikolaeva')
+timonov = Lecturer('Vadim', 'Timonov')
+savkin = Lecturer('Alexey', 'Savkin')
 smirnov = Reviewer('Artem', 'Smirnov')
 fedorov = Reviewer('Vadim', 'Fedorov')
+
+student_list = [sasha, vasy, egor, masha, katy]
+lecture_list = [andreeva, nikolaeva, timonov, savkin]
+
